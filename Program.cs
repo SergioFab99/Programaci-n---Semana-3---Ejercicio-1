@@ -15,7 +15,7 @@ namespace ProgramaciónSemana_3Ejercicio_1
 
             Console.Write("Ingresa tu dinero inicial: ");
             string entrada = Console.ReadLine();
-            float dineroInicial = 100f; // Valor por defecto
+            float dineroInicial = 100f;
             if (!float.TryParse(entrada, out dineroInicial))
             {
                 Console.WriteLine("Entrada inválida. Se usará $100 por defecto.");

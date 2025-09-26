@@ -4,20 +4,20 @@ using ProgramaciónSemana_3Ejercicio_1.Plantas;
 
 namespace ProgramaciónSemana_3Ejercicio_1
 {
-    public class Jugador
+    internal class Jugador
     {
-        public float Dinero { get; set; }
-        public List<Planta> PlantasEnCampo { get; private set; }
-        public List<string> SemillasDisponibles { get; private set; }
+        internal float Dinero { get; set; }
+        internal List<Planta> PlantasEnCampo { get; private set; }
+        internal List<string> SemillasDisponibles { get; private set; }
 
-        public Jugador(float dineroInicial)
+        internal Jugador(float dineroInicial)
         {
             Dinero = dineroInicial;
             PlantasEnCampo = new List<Planta>();
             SemillasDisponibles = new List<string> { "Tomate", "Lechuga" };
         }
 
-        public bool ComprarEspacio(int cantidad)
+        internal bool ComprarEspacio(int cantidad)
         {
             float precioTotal = cantidad * 10.0f;
             if (Dinero >= precioTotal)
@@ -28,7 +28,7 @@ namespace ProgramaciónSemana_3Ejercicio_1
             return false;
         }
 
-        public bool ComprarSemilla(string tipo)
+        internal bool ComprarSemilla(string tipo)
         {
             Planta planta = GetPlantaPorNombre(tipo);
             if (planta == null) return false;
@@ -36,13 +36,13 @@ namespace ProgramaciónSemana_3Ejercicio_1
             if (Dinero >= planta.ValorSemilla)
             {
                 Dinero -= planta.ValorSemilla;
-                PlantasEnCampo.Add(new PlantaBase(tipo));
+                PlantasEnCampo.Add(planta); // ya instancia concreta
                 return true;
             }
             return false;
         }
 
-        public void PasarTurno()
+        internal void PasarTurno()
         {
             foreach (var planta in PlantasEnCampo)
             {
@@ -50,21 +50,21 @@ namespace ProgramaciónSemana_3Ejercicio_1
             }
         }
 
-        public List<Planta> GetPlantasListasParaCosechar()
+        internal List<Planta> GetPlantasListasParaCosechar()
         {
             return PlantasEnCampo.FindAll(p => p.ListoParaCosechar);
         }
 
-        public void MostrarPlantas()
+        internal void MostrarPlantas()
         {
             Console.WriteLine("\n--- Plantas en el campo ---");
             for (int i = 0; i < PlantasEnCampo.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {PlantasEnCampo[i]}");
+                Console.WriteLine(string.Format("{0}. {1}", i + 1, PlantasEnCampo[i].ObtenerDescripcion()));
             }
         }
 
-        public float VenderPlanta(Planta planta)
+        internal float VenderPlanta(Planta planta)
         {
             float ingreso = planta.Cosechar();
             PlantasEnCampo.Remove(planta);
@@ -83,10 +83,5 @@ namespace ProgramaciónSemana_3Ejercicio_1
                     return null;
             }
         }
-    }
-
-    internal class PlantaBase : Planta
-    {
-        public PlantaBase(string nombre) : base(nombre, 0, 0, 0, 0) { }
     }
 }

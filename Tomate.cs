@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ProgramaciónSemana_3Ejercicio_1.Plantas
 {
-    public class Tomate : Planta
+    internal class Tomate : Planta
     {
-        public Tomate() : base("Tomate", 5, 3, 5.0f, 8.0f) { }
+        internal Tomate() : base("Tomate", 5, 3, 5.0f, 8.0f) { }
     }
 }

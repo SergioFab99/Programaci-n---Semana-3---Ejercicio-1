@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace ProgramaciónSemana_3Ejercicio_1.Plantas
 {
-    public abstract class Planta
+    internal abstract class Planta
     {
-        public string Nombre { get; set; }
-        public int TiempoDeVida { get; set; }
-        public int FrutosPorCosecha { get; set; }
-        public float ValorSemilla { get; set; }
-        public float ValorProducto { get; set; }
+        internal string Nombre { get; set; }
+        internal int TiempoDeVida { get; set; }
+        internal int FrutosPorCosecha { get; set; }
+        internal float ValorSemilla { get; set; }
+        internal float ValorProducto { get; set; }
 
-        public int Edad { get; private set; }
+        internal int Edad { get; private set; }
 
-        public bool ListoParaCosechar
+        internal bool ListoParaCosechar
         {
             get
             {
@@ -34,19 +34,20 @@ namespace ProgramaciónSemana_3Ejercicio_1.Plantas
             Edad = 0;
         }
 
-        public void Envejecer()
+        internal void Envejecer()
         {
             Edad++;
         }
 
-        public virtual float Cosechar()
+        internal virtual float Cosechar()
         {
             return FrutosPorCosecha * ValorProducto;
         }
 
-        public override string ToString()
+        // Metodo interno para reemplazar el antiguo ToString publico
+        internal string ObtenerDescripcion()
         {
-            return $"{Nombre} - Edad: {Edad}/{TiempoDeVida}, Productos: {FrutosPorCosecha}";
+            return string.Format("{0} - Edad: {1}/{2}, Productos: {3}", Nombre, Edad, TiempoDeVida, FrutosPorCosecha);
         }
     }
 }

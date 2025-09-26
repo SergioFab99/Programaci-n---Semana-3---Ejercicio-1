@@ -4,23 +4,23 @@ using ProgramaciónSemana_3Ejercicio_1.Plantas;
 
 namespace ProgramaciónSemana_3Ejercicio_1
 {
-    public class Granja
+    internal class Granja
     {
         private Jugador Jugador { get; set; }
 
-        public Granja(Jugador jugador)
+        internal Granja(Jugador jugador)
         {
             Jugador = jugador;
         }
 
-        public void MostrarMenu()
+        internal void MostrarMenu()
         {
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("=== SIMULADOR DE GRANJA ===");
-                Console.WriteLine($"Dinero actual: ${Jugador.Dinero:F2}");
-                Console.WriteLine($"Plantas en campo: {Jugador.PlantasEnCampo.Count}");
+                Console.WriteLine(string.Format("Dinero actual: ${0:F2}", Jugador.Dinero));
+                Console.WriteLine(string.Format("Plantas en campo: {0}", Jugador.PlantasEnCampo.Count));
                 Console.WriteLine("\nOpciones:");
                 Console.WriteLine("1. Comprar espacio ($10 cada uno)");
                 Console.WriteLine("2. Comprar semilla");
@@ -64,11 +64,12 @@ namespace ProgramaciónSemana_3Ejercicio_1
         private void ComprarEspacio()
         {
             Console.Write("¿Cuántos espacios quieres comprar? (precio: $10 cada uno): ");
-            if (int.TryParse(Console.ReadLine(), out int cantidad))
+            int cantidad;
+            if (int.TryParse(Console.ReadLine(), out cantidad))
             {
                 if (Jugador.ComprarEspacio(cantidad))
                 {
-                    Console.WriteLine($"Compraste {cantidad} espacios.");
+                    Console.WriteLine(string.Format("Compraste {0} espacios.", cantidad));
                 }
                 else
                 {
@@ -87,7 +88,7 @@ namespace ProgramaciónSemana_3Ejercicio_1
             Console.WriteLine("Semillas disponibles:");
             foreach (string s in Jugador.SemillasDisponibles)
             {
-                Console.WriteLine($"- {s}");
+                Console.WriteLine(string.Format("- {0}", s));
             }
 
             Console.Write("¿Qué semilla quieres comprar? ");
@@ -95,7 +96,7 @@ namespace ProgramaciónSemana_3Ejercicio_1
 
             if (Jugador.ComprarSemilla(tipo))
             {
-                Console.WriteLine($"Semilla de {tipo} comprada.");
+                Console.WriteLine(string.Format("Semilla de {0} comprada.", tipo));
             }
             else
             {
@@ -134,16 +135,17 @@ namespace ProgramaciónSemana_3Ejercicio_1
             Console.WriteLine("Plantas listas para cosechar:");
             for (int i = 0; i < listas.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {listas[i]}");
+                Console.WriteLine(string.Format("{0}. {1}", i + 1, listas[i].ObtenerDescripcion()));
             }
 
             Console.Write("Selecciona el número de la planta a cosechar: ");
-            if (int.TryParse(Console.ReadLine(), out int indice) && indice >= 1 && indice <= listas.Count)
+            int indice;
+            if (int.TryParse(Console.ReadLine(), out indice) && indice >= 1 && indice <= listas.Count)
             {
                 var planta = listas[indice - 1];
                 float ingreso = Jugador.VenderPlanta(planta);
                 Jugador.Dinero += ingreso;
-                Console.WriteLine($"✔️ Cosechaste {planta.Nombre} y ganaste ${ingreso:F2}");
+                Console.WriteLine(string.Format("✔️ Cosechaste {0} y ganaste ${1:F2}", planta.Nombre, ingreso));
             }
             else
             {
